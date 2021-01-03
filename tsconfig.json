@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["es2019"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "target": "es2016",
+    "outDir": "lib",
+    "baseUrl": "./src"
+  },
+  "exclude": ["node_modules"]
+}
