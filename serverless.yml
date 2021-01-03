@@ -1,5 +1,5 @@
-org: nashobaems
-app: emt-backend
+# org: nashobaems
+# app: emt-backend
 
 service: emt-backend
 
@@ -24,17 +24,16 @@ package:
     - tests/**
 
 functions:
-  usersLogin:
-    handler: src/routes/users/login.handler
+  hello:
+    handler: src/routes/hello.handler
     events:
       - http:
-          path: users/login
+          path: hello
           method: POST
           cors: true
 
 custom:
   serverless-offline:
-    prefix: dev
     port: 3000
     stage: dev
   webpack:

@@ -26,8 +26,14 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.js', '.ts', '.json'],
     alias: {
       src: path.resolve(__dirname, 'src/')
     }
+  },
+  output: {
+    libraryTarget: 'commonjs',
+    path: path.join(__dirname, '.webpack'),
+    filename: '[name].js'
   }
 };
