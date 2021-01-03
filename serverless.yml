@@ -1,5 +1,5 @@
-# org: nashobaems
-# app: emt-backend
+org: nashobaems
+app: nashoba-ems-scheduler
 
 service: emt-backend
 
