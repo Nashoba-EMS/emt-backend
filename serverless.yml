@@ -1,0 +1,49 @@
+org: nashobaems
+app: emt-backend
+
+service: emt-backend
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: ${opt:stage,'dev'}
+  region: us-east-2
+
+  environment:
+    APP_STAGE: ${self:provider.stage}
+    AUTH_SECRET: ${file(./serverless-config/secrets.json):AUTH_SECRET}
+    MONGODB_URI: ${file(./serverless-config/secrets.json):MONGODB_URI}
+
+package:
+  individually: true
+
+  exclude:
+    - "README.md"
+    - ./*.sh
+    - tests/**
+
+functions:
+  usersLogin:
+    handler: src/routes/users/login.handler
+    events:
+      - http:
+          path: users/login
+          method: POST
+          cors: true
+
+custom:
+  serverless-offline:
+    prefix: dev
+    port: 3000
+    stage: dev
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  stages:
+    - dev
+
+plugins:
+  - serverless-webpack
+  - serverless-offline # Should be last
+
