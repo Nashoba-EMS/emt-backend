@@ -15,9 +15,9 @@ https://ztb86wpe17.execute-api.us-east-1.amazonaws.com/dev/
 
   ```bash
   #!/bin/bash
-  export SERVERLESS_ACCESS_KEY="<CHANGE ME>"
-  export AWS_ACCESS_KEY_ID="<CHANGE ME>"
-  export AWS_SECRET_ACCESS_KEY="<CHANGE ME>"
+  export SERVERLESS_ACCESS_KEY="<CHANGE_ME>"
+  export AWS_ACCESS_KEY_ID="<CHANGE_ME>"
+  export AWS_SECRET_ACCESS_KEY="<CHANGE_ME>"
   ```
 
 - Run `yarn deploy`
@@ -29,10 +29,11 @@ Need to create a `serverless-config/secrets.json` file of the following signatur
 
 ```javascript
 {
-  "AUTH_SECRET": "<auth_secret>",
-  "AWS_ACCESS_KEY_ID": "<access_key>",
-  "AWS_SECRET_ACCESS_KEY": "<secret_access_key>",
-  "MONGODB_URI": "<mongo_database_uri>"
+  "SERVERLESS_ACCESS": "<CHANGE_ME>",
+  "AUTH_SECRET": "<CHANGE_ME>",
+  "AWS_ACCESS_KEY_ID": "<CHANGE_ME>",
+  "AWS_SECRET_ACCESS_KEY": "<CHANGE_ME>",
+  "MONGODB_URI": "<CHANGE_ME>"
 }
 ```
 
