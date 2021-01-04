@@ -45,7 +45,7 @@
     "offline": ". ./offline.sh && serverless offline start",
     "deploy": ". ./deploy.sh && sls deploy",
     "validate": "npx tsc --noEmit",
-    "eslint": "eslint --config ./.eslintrc.json --ext .js,.ts src/"
+    "eslint": "eslint --config ./.eslintrc.js --ext .js,.ts src/"
   },
   "prettier": {
     "trailingComma": "none",
