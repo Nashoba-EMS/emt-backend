@@ -39,6 +39,28 @@ export const getUser = async (
 };
 
 /**
+ * Get a list of all users
+ */
+export const getAllUsers = async () => {
+  try {
+    const res = await userCollection()
+      ?.find(
+        {},
+        {
+          projection: {
+            password: 0
+          }
+        }
+      )
+      .toArray();
+
+    return res ?? [];
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
  * Create a new user
  */
 export const createUser = async (user: Omit<User, '_id'>) => {

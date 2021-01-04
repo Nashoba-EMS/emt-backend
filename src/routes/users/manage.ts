@@ -105,13 +105,6 @@ const _handler: HTTPRawHandler<
       throw new httpErrors.BadRequest('Missing action');
     }
   }
-
-  return {
-    message: 'Success',
-    data: {
-      user: undefined
-    }
-  };
 };
 
 export const handler = middyfy(_handler, {
