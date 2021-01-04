@@ -1,5 +1,4 @@
 import middyfy from '../middleware';
-
 import { HTTPRawHandler } from './handler';
 
 const _handler: HTTPRawHandler = async (event) => {

@@ -1,11 +1,27 @@
 import httpErrors from 'http-errors';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 const BEARER_OFFSET = 7;
+const SALT_ROUNDS = 10;
 
 export interface TokenPayload {
   email: string;
 }
+
+/**
+ * Hash a given password for storing in the database
+ */
+export const hashPassword = async (password: string) => {
+  return bcrypt.hash(password, SALT_ROUNDS);
+};
+
+/**
+ * Validate a given hash matches a given password
+ */
+export const validatePassword = async (hash: string, password: string) => {
+  return bcrypt.compare(password, hash);
+};
 
 /**
  * Extract a Bearer Token from Authorization header

@@ -107,7 +107,7 @@ const errorHandler = () => ({
 /**
  * Wrap the handler with middleware
  */
-const middyfy = (handler: HTTPRawHandler, config = { authorized: true, useMongo: true }) => {
+const middyfy = (handler: HTTPRawHandler<any, any, any, any>, config = { authorized: true, useMongo: true }) => {
   const middleware = middy(wrappedHandler(handler));
 
   if (config.authorized || config.useMongo) {
