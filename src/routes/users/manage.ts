@@ -4,7 +4,7 @@ import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 
 import { createUser, deleteUser, getUser, updateUser } from '../../models/user';
-import { hashPassword } from '../../utils/auth';
+import { generateRandomPassword, hashPassword } from '../../utils/auth';
 import { User } from '../../models/user.d';
 
 /**
@@ -39,7 +39,7 @@ const _handler: HTTPRawHandler<
 
   switch (action) {
     case 'CREATE': {
-      const rawPassword = userPayload.password ?? 'TODO';
+      const rawPassword = userPayload.password ?? generateRandomPassword();
 
       const createdUser = await createUser({
         email: targetEmail,
