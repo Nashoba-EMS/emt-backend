@@ -26,7 +26,8 @@ const _handler: HTTPRawHandler<
 
   if (
     !event.middleware.authorized ||
-    (!event.middleware.user.admin && !(action === 'UPDATE' && targetEmail === event.middleware.user.email))
+    (!event.middleware.user.admin &&
+      !(action === 'UPDATE' && targetEmail === event.middleware.user.email && userPayload.admin !== undefined))
   ) {
     // User not authorized or attempting to edit someone else and isn't an admin
     throw new httpErrors.Unauthorized('Not authorized');
@@ -65,7 +66,19 @@ const _handler: HTTPRawHandler<
       };
     }
     case 'UPDATE': {
-      const updatedUser = await updateUser(targetEmail, userPayload);
+      let updates: Partial<User> = {};
+
+      if (event.middleware.user.admin) {
+        // Admin can set anything
+        updates = userPayload;
+      }
+
+      if (userPayload.password !== undefined) {
+        // Admin and regular user can update password
+        updates.password = await hashPassword(userPayload.password);
+      }
+
+      const updatedUser = await updateUser(targetEmail, updates);
 
       if (!updatedUser) {
         throw new httpErrors.InternalServerError('Failed to update user');
