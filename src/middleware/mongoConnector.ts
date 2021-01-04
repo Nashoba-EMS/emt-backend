@@ -1,7 +1,7 @@
 import { Db, MongoClient } from 'mongodb';
 
-export let client: MongoClient = null;
-export let db: Db = null;
+export let client: MongoClient | null = null;
+export let db: Db | null = null;
 
 const mongoConnector = ({
   databaseURI,

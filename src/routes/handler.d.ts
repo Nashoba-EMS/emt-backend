@@ -1,11 +1,7 @@
-import {
-  Handler,
-  Callback,
-  APIGatewayEventRequestContextWithAuthorizer,
-  APIGatewayEventDefaultAuthorizerContext
-} from 'aws-lambda';
+import { Handler, Callback } from 'aws-lambda';
+import { User } from '../models/user.d';
 
-export type HTTPRawHandler = Handler<HTTPRawEvent, HTTPRawResult>;
+export type HTTPRawHandler = Handler<HTTPUnauthorizedEvent | HTTPAuthorizedEvent, HTTPRawResult>;
 
 export type HTTPRawCallback = Callback<HTTPRawResult>;
 
@@ -14,8 +10,19 @@ export interface HTTPRawResult {
   data?: any;
 }
 
-export type HTTPRawEvent = EventBase<APIGatewayEventDefaultAuthorizerContext>;
-export interface EventBase<TAuthorizerContext> {
+export type HTTPUnknownEvent = HTTPUnauthorizedEvent | HTTPAuthorizedEvent;
+
+export type HTTPUnauthorizedEvent = EventBase<{
+  authorized: false;
+  user: null;
+}>;
+
+export type HTTPAuthorizedEvent = EventBase<{
+  authorized: true;
+  user: User;
+}>;
+
+export interface EventBase<MiddlewarePayload> {
   body: any;
   headers: { [name: string]: any };
   multiValueHeaders: { [name: string]: any };
@@ -25,6 +32,6 @@ export interface EventBase<TAuthorizerContext> {
   pathParameters: { [name: string]: string } | null;
   queryStringParameters: { [name: string]: string } | null;
   multiValueQueryStringParameters: { [name: string]: string[] } | null;
-  stageVariables: { [name: string]: string } | null;
-  requestContext: APIGatewayEventRequestContextWithAuthorizer<TAuthorizerContext>;
+
+  middleware: MiddlewarePayload;
 }

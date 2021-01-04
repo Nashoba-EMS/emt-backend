@@ -7,14 +7,15 @@ import oc from 'js-optchain';
 import { Callback, Context } from 'aws-lambda';
 
 import * as auth from '../utils/auth';
-import { HTTPRawEvent, HTTPRawHandler, HTTPRawResult } from '../routes/handler';
+import { HTTPRawHandler, HTTPRawResult, HTTPUnknownEvent } from '../routes/handler';
+import { getUser } from '../models/user';
 import mongoConnector from './mongoConnector';
 
 /**
  * Wrap the handler to have proper response type
  */
 const wrappedHandler = (handler: HTTPRawHandler) => async (
-  event: HTTPRawEvent,
+  event: HTTPUnknownEvent,
   context: Context,
   callback: Callback<HTTPRawResult>
 ) => {
@@ -30,8 +31,9 @@ const wrappedHandler = (handler: HTTPRawHandler) => async (
  * Attempt to authorize the handler
  */
 const httpHeaderAuthorizer = () => ({
-  before: async (handler) => {
-    handler.event.authorized = false;
+  before: async (handler: { event: HTTPUnknownEvent }) => {
+    handler.event.middleware.authorized = false;
+    handler.event.middleware.user = null;
 
     if (oc(handler.event.headers, { Authorization: '' }).Authorization.startsWith('Bearer')) {
       const token = auth.extractToken(handler.event.headers.Authorization);
@@ -40,14 +42,17 @@ const httpHeaderAuthorizer = () => ({
       console.log('Received body', handler.event.body);
 
       if (email) {
-        // const foundUser = await getUser(email);
-        // if (foundUser.success && foundUser.data?.user) {
-        //   handler.event.authorized = true;
-        //   handler.event.user = foundUser.data.user;
-        //   console.log('Signed in', handler.event.user);
-        // } else {
-        //   console.log('Failed sign in', email);
-        // }
+        const user = await getUser(email);
+
+        if (user) {
+          handler.event.middleware.authorized = true;
+          handler.event.middleware.user = user;
+          console.log('Signed in', handler.event.middleware.user);
+        } else {
+          handler.event.middleware.authorized = false;
+          handler.event.middleware.user = null;
+          console.log('Failed sign in', email);
+        }
       } else {
         console.log('Failed sign in no email');
       }
