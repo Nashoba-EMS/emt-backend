@@ -25,9 +25,10 @@ const _handler: HTTPRawHandler<
   const { action, targetEmail, userPayload } = event.body;
 
   if (
-    !event.middleware.authorized ||
-    (!event.middleware.user.admin &&
-      !(action === 'UPDATE' && targetEmail === event.middleware.user.email && userPayload.admin !== undefined))
+    !event.middleware.override &&
+    (!event.middleware.authorized ||
+      (!event.middleware.user.admin &&
+        !(action === 'UPDATE' && targetEmail === event.middleware.user.email && userPayload.admin !== undefined)))
   ) {
     // User not authorized or attempting to edit someone else and isn't an admin
     throw new httpErrors.Unauthorized('Not authorized');
@@ -68,7 +69,7 @@ const _handler: HTTPRawHandler<
     case 'UPDATE': {
       let updates: Partial<User> = {};
 
-      if (event.middleware.user.admin) {
+      if (event.middleware.override || event.middleware.user.admin) {
         // Admin can set anything
         updates = userPayload;
       }
@@ -102,7 +103,7 @@ const _handler: HTTPRawHandler<
         };
       }
 
-      if (targetUser.email === event.middleware.user.email) {
+      if (event.middleware.override || targetUser.email === event.middleware.user.email) {
         // Admins should not delete themselves
         throw new httpErrors.BadRequest('Cannot delete yourself');
       }

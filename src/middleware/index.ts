@@ -51,6 +51,10 @@ const httpHeaderAuthorizer = () => ({
         }
       } else {
         console.log('Failed sign in no email');
+
+        if (token === process.env.AUTH_SECRET) {
+          handler.event.middleware.override = true;
+        }
       }
     }
 

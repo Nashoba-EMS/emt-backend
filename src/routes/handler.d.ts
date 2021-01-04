@@ -17,11 +17,13 @@ export interface HTTPRawResult<DataPayload = undefined> {
 
 export type HTTPUnknownEvent<BodyPayload = null, QueryPayload = null, PathPayload = null> =
   | HTTPUnauthorizedEvent<BodyPayload, QueryPayload, PathPayload>
-  | HTTPAuthorizedEvent<BodyPayload, QueryPayload, PathPayload>;
+  | HTTPAuthorizedEvent<BodyPayload, QueryPayload, PathPayload>
+  | HTTPAdminEvent<BodyPayload, QueryPayload, PathPayload>;
 
 export type HTTPUnauthorizedEvent<BodyPayload, QueryPayload, PathPayload> = EventBase<
   {
     authorized: false;
+    override: false;
     user: null;
   },
   BodyPayload,
@@ -32,7 +34,19 @@ export type HTTPUnauthorizedEvent<BodyPayload, QueryPayload, PathPayload> = Even
 export type HTTPAuthorizedEvent<BodyPayload, QueryPayload, PathPayload> = EventBase<
   {
     authorized: true;
+    override: false;
     user: User;
+  },
+  BodyPayload,
+  QueryPayload,
+  PathPayload
+>;
+
+export type HTTPAdminEvent<BodyPayload, QueryPayload, PathPayload> = EventBase<
+  {
+    authorized: false;
+    override: true;
+    user: null;
   },
   BodyPayload,
   QueryPayload,

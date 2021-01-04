@@ -31,6 +31,7 @@ Need to create a `serverless-config/secrets.json` file of the following signatur
 {
   "SERVERLESS_ACCESS": "<CHANGE_ME>",
   "AUTH_SECRET": "<CHANGE_ME>",
+  "ADMIN_SECRET": "<CHANGE_ME>",
   "AWS_ACCESS_KEY_ID": "<CHANGE_ME>",
   "AWS_SECRET_ACCESS_KEY": "<CHANGE_ME>",
   "MONGODB_URI": "<CHANGE_ME>"
