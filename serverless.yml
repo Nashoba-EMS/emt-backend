@@ -39,6 +39,14 @@ functions:
           path: users/login
           method: POST
           cors: true
+  
+  usersManage:
+    handler: src/routes/users/manage.handler
+    events:
+      - http:
+          path: users/manage
+          method: POST
+          cors: true
 
 custom:
   serverless-offline:
