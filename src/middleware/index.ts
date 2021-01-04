@@ -32,8 +32,11 @@ const wrappedHandler = (handler: HTTPRawHandler) => async (
  */
 const httpHeaderAuthorizer = () => ({
   before: async (handler: { event: HTTPUnknownEvent }) => {
-    handler.event.middleware.authorized = false;
-    handler.event.middleware.user = null;
+    handler.event.middleware = {
+      authorized: false,
+      override: false,
+      user: null
+    };
 
     if (oc(handler.event.headers, { Authorization: '' }).Authorization.startsWith('Bearer')) {
       const token = auth.extractToken(handler.event.headers.Authorization);
@@ -43,8 +46,12 @@ const httpHeaderAuthorizer = () => ({
         const user = await getUser(email);
 
         if (user) {
-          handler.event.middleware.authorized = true;
-          handler.event.middleware.user = user;
+          handler.event.middleware = {
+            authorized: true,
+            override: false,
+            user
+          };
+
           console.log('Signed in', handler.event.middleware.user);
         } else {
           console.log('Failed sign in', email);
@@ -52,8 +59,14 @@ const httpHeaderAuthorizer = () => ({
       } else {
         console.log('Failed sign in no email');
 
-        if (token === process.env.AUTH_SECRET) {
-          handler.event.middleware.override = true;
+        if (token === process.env.ADMIN_SECRET) {
+          handler.event.middleware = {
+            authorized: false,
+            override: true,
+            user: null
+          };
+
+          console.log('Sign in override');
         }
       }
     }
