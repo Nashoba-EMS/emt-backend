@@ -22,13 +22,17 @@ const _handler: HTTPRawHandler<
     user?: Omit<User, 'password'>;
   }
 > = async (event) => {
-  if (!event.middleware.authorized || !event.middleware.user.admin) {
+  const { action, targetEmail, userPayload } = event.body;
+
+  if (
+    !event.middleware.authorized ||
+    (!event.middleware.user.admin && !(action === 'UPDATE' && targetEmail === event.middleware.user.email))
+  ) {
+    // User not authorized or attempting to edit someone else and isn't an admin
     throw new httpErrors.Unauthorized('Not authorized');
   }
 
-  const { action, userPayload } = event.body;
-
-  if (!event.body.targetEmail) {
+  if (!targetEmail) {
     throw new httpErrors.BadRequest('No user specified');
   }
 
@@ -37,7 +41,7 @@ const _handler: HTTPRawHandler<
       const rawPassword = userPayload.password ?? 'TODO';
 
       const createdUser = await createUser({
-        email: event.body.targetEmail,
+        email: targetEmail,
         password: await hashPassword(rawPassword),
         admin: userPayload.admin ?? false,
         name: userPayload.name ?? '',
@@ -61,7 +65,7 @@ const _handler: HTTPRawHandler<
       };
     }
     case 'UPDATE': {
-      const updatedUser = await updateUser(event.body.targetEmail, userPayload);
+      const updatedUser = await updateUser(targetEmail, userPayload);
 
       if (!updatedUser) {
         throw new httpErrors.InternalServerError('Failed to update user');
@@ -75,7 +79,7 @@ const _handler: HTTPRawHandler<
       };
     }
     case 'DELETE': {
-      const targetUser = await getUser(event.body.targetEmail);
+      const targetUser = await getUser(targetEmail);
 
       if (!targetUser) {
         // User does not exist, pretend user was deleted
