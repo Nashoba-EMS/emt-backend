@@ -21,6 +21,8 @@ const mongoConnector = ({
         client = await MongoClient.connect(databaseURI, connectionOpts);
 
         db = client.db('EMT');
+
+        console.log('=> Connection success');
       } catch (error) {
         console.error('=> Connection error with MongoDB', error);
       }
