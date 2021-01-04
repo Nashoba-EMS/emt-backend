@@ -14,7 +14,7 @@
     "@types/aws-lambda": "^8.10.48",
     "bcryptjs": "^2.4.3",
     "http-errors": "^1.7.3",
-    "js-optchain": "^2.0.2",
+    "js-optchain": "^2.0.8",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongodb": "^3.5.3",

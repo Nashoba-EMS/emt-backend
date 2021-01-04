@@ -4432,7 +4432,7 @@ jmespath@0.15.0:
   resolved "https://registry.yarnpkg.com/jmespath/-/jmespath-0.15.0.tgz#a3f222a9aae9f966f5d27c796510e28091764217"
   integrity sha1-o/Iiqarp+Wb10nx5ZRDigJF2Qhc=
 
-js-optchain@^2.0.2:
+js-optchain@^2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/js-optchain/-/js-optchain-2.0.8.tgz#7b1793351108dc6cb51b01f68890350d6a8ab933"
   integrity sha512-ksH4qF8iyiKfZZ77TyW7HqlHdITDYmUt41CASeSEHHY/bFGhdt2a0tOOLDvPDHlhaTu3slYq3CxQ2a7OJ5CCUQ==
