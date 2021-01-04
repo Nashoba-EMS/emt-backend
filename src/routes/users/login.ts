@@ -7,6 +7,9 @@ import { getUser } from '../../models/user';
 import { User } from '../../models/user.d';
 import { generateToken, validatePassword } from '../../utils/auth';
 
+/**
+ * Login and generate a token and retrieve profile details
+ */
 const _handler: HTTPRawHandler<
   {
     email: string;

@@ -39,8 +39,6 @@ const httpHeaderAuthorizer = () => ({
       const token = auth.extractToken(handler.event.headers.Authorization);
       const email = auth.verifyAndDecodeToken(token);
 
-      console.log('Received body', handler.event.body);
-
       if (email) {
         const user = await getUser(email);
 
@@ -49,8 +47,6 @@ const httpHeaderAuthorizer = () => ({
           handler.event.middleware.user = user;
           console.log('Signed in', handler.event.middleware.user);
         } else {
-          handler.event.middleware.authorized = false;
-          handler.event.middleware.user = null;
           console.log('Failed sign in', email);
         }
       } else {

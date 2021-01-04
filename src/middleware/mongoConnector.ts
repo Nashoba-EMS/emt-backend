@@ -3,6 +3,9 @@ import { Db, MongoClient } from 'mongodb';
 export let client: MongoClient | null = null;
 export let db: Db | null = null;
 
+/**
+ * Middleware to connect or reuse existing connections to Mongo
+ */
 const mongoConnector = ({
   databaseURI,
   connectionOpts = {
