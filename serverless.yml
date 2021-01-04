@@ -31,6 +31,14 @@ functions:
           path: hello
           method: POST
           cors: true
+  
+  usersLogin:
+    handler: src/routes/users/login.handler
+    events:
+      - http:
+          path: users/login
+          method: POST
+          cors: true
 
 custom:
   serverless-offline:
