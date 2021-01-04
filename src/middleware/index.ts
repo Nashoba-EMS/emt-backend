@@ -1,7 +1,8 @@
-import middy from '@middy/core';
-import jsonBodyParser from '@middy/http-json-body-parser';
+import { ShallotAWS } from 'shallot';
+import { ShallotAWSHttpJsonBodyParser } from '@shallot/http-json-body-parser';
+import { ShallotAWSHttpErrorHandler } from '@shallot/http-error-handler';
 import urlEncodeBodyParser from '@middy/http-urlencode-body-parser';
-import cors from '@middy/http-cors';
+import { ShallotAWSHttpCors } from '@shallot/http-cors';
 import doNotWaitForEmptyEventLoop from '@middy/do-not-wait-for-empty-event-loop';
 import oc from 'js-optchain';
 import { Callback, Context } from 'aws-lambda';
@@ -79,7 +80,7 @@ const httpHeaderAuthorizer = () => ({
  * Trim query string params
  */
 const queryTrimmer = () => ({
-  before: (handler, next) => {
+  before: (handler) => {
     const params = Object.entries(handler.event.queryStringParameters || []);
 
     for (const [key, value] of params) {
@@ -87,8 +88,6 @@ const queryTrimmer = () => ({
         handler.event.queryStringParameters[key] = value.trim();
       }
     }
-
-    return next();
   }
 });
 
@@ -110,10 +109,10 @@ const errorHandler = () => ({
         })
       };
 
-      return next();
+      return;
     }
 
-    return next(handler.error);
+    return handler.error;
   }
 });
 
@@ -121,7 +120,8 @@ const errorHandler = () => ({
  * Wrap the handler with middleware
  */
 const middyfy = (handler: HTTPRawHandler<any, any, any, any>, config = { authorized: true, useMongo: true }) => {
-  const middleware = middy(wrappedHandler(handler));
+  // @ts-ignore
+  const middleware = ShallotAWS(wrappedHandler(handler));
 
   if (config.authorized || config.useMongo) {
     middleware.use(
@@ -132,17 +132,22 @@ const middyfy = (handler: HTTPRawHandler<any, any, any, any>, config = { authori
   }
 
   middleware
-    .use(queryTrimmer())
-    .use(jsonBodyParser())
-    .use(cors())
-    .use(doNotWaitForEmptyEventLoop({ runOnBefore: true, runOnError: true }))
     // @ts-ignore
-    .use(urlEncodeBodyParser({ extended: true }));
+    .use(queryTrimmer())
+    // @ts-ignore
+    .use(ShallotAWSHttpJsonBodyParser())
+    // @ts-ignore
+    .use(ShallotAWSHttpCors());
+  // @ts-ignore
+  // .use(doNotWaitForEmptyEventLoop({ runOnBefore: true, runOnError: true }))
+  // @ts-ignore
+  // .use(urlEncodeBodyParser({ extended: true }));
 
   if (config.authorized) {
     middleware.use(httpHeaderAuthorizer());
   }
 
+  // @ts-ignore
   middleware.use(errorHandler());
 
   return middleware;

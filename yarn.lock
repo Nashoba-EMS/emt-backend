@@ -664,6 +664,38 @@
     uuid "^3.4.0"
     write-file-atomic "^2.4.3"
 
+"@shallot/http-cors@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@shallot/http-cors/-/http-cors-1.0.1.tgz#9c592995048503756d071340607a5fe3aee0143c"
+  integrity sha512-TSlUDfppoy+mnrf0ahujBV+BHkMqq0QXOYgfV4QPIpTrG/TS3kz8Uadqnq4z8QPppCO+0FR3K8hIf4hc487xdg==
+  dependencies:
+    http-errors "^1.8.0"
+
+"@shallot/http-error-handler@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@shallot/http-error-handler/-/http-error-handler-1.0.1.tgz#7d303a489cb061433f8634eb032767fe9578d420"
+  integrity sha512-bhvmgw54/9OZpgPmOh4WLdccXKLgVTSgqe4gNg2bi2km8aO7k/ozPl6xizn5lICGjmYI0IQ4OCEPhJPhzMtmHw==
+  dependencies:
+    http-errors "^1.8.0"
+
+"@shallot/http-json-body-parser@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@shallot/http-json-body-parser/-/http-json-body-parser-1.0.1.tgz#27a4132365fca9d5f950da9883f17a9f278d2023"
+  integrity sha512-OL+iDWhZjanbyanvzPpqy63JntL3+60NY//Gq2PYyUoBDtPI2GS5eXr6pSuH6kP2Fu11ByfnCEAEIzipujiHOQ==
+  dependencies:
+    content-type "^1.0.4"
+    http-errors "^1.8.0"
+
+"@shallot/rest-wrapper@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@shallot/rest-wrapper/-/rest-wrapper-1.1.1.tgz#147a957e770a9a6a94fcbd0d5b97651faf15331e"
+  integrity sha512-52F15wQqzWJRBcwlUS1EuZYIijTGRxFe24xDFNBkNtHegLhT2cR8SwF+WeIeogtZWvq7Po9U3mt/pRe7hL/P/Q==
+  dependencies:
+    "@shallot/http-cors" "^1.0.1"
+    "@shallot/http-error-handler" "^1.0.1"
+    "@shallot/http-json-body-parser" "^1.0.1"
+    shallot "^1.2.2"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -3887,7 +3919,7 @@ http-cache-semantics@^4.0.0:
   resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz#49e91c5cbf36c9b94bcfcd71c23d5249ec74e390"
   integrity sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
 
-http-errors@^1.6.3, http-errors@^1.7.3:
+http-errors@^1.6.3, http-errors@^1.7.3, http-errors@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.8.0.tgz#75d1bbe497e1044f51e4ee9e704a62f28d336507"
   integrity sha512-4I8r0C5JDhT5VkvI47QktDW75rNlGVsUf/8hzjCC/wkWI/jdTRmBb9aI7erSG82r1bjKY3F6k28WnsVxB1C73A==
@@ -6486,6 +6518,11 @@ sha.js@^2.4.0, sha.js@^2.4.8:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
+
+shallot@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/shallot/-/shallot-1.2.2.tgz#317996b42d6df9db70206b2818b0cf63b09928f6"
+  integrity sha512-SwhVGTgsVBBszzNbuP6dajxfKGnqcpjWwqYOvuWdttibXFEwhSwAaRnqn9eI2DUfHvjh6Z45ybUzOjTi4sslRw==
 
 shebang-command@^1.2.0:
   version "1.2.0"

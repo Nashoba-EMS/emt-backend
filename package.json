@@ -11,6 +11,10 @@
     "@middy/http-error-handler": "^1.0.0-beta.8",
     "@middy/http-json-body-parser": "^1.0.0-beta.8",
     "@middy/http-urlencode-body-parser": "^1.0.0-beta.8",
+    "@shallot/http-cors": "^1.0.1",
+    "@shallot/http-error-handler": "^1.0.1",
+    "@shallot/http-json-body-parser": "^1.0.1",
+    "@shallot/rest-wrapper": "^1.1.1",
     "@types/aws-lambda": "^8.10.48",
     "bcryptjs": "^2.4.3",
     "http-errors": "^1.7.3",
@@ -19,6 +23,7 @@
     "moment": "^2.24.0",
     "mongodb": "^3.5.3",
     "serverless-stage-manager": "^1.0.5",
+    "shallot": "^1.2.2",
     "source-map-support": "^0.5.16",
     "uuid": "^7.0.2"
   },
