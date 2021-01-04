@@ -136,7 +136,6 @@ const middyfy = (handler: HTTPRawHandler<any, any, any, any>, config = { authori
     .use(jsonBodyParser())
     .use(cors())
     .use(doNotWaitForEmptyEventLoop({ runOnBefore: true, runOnError: true }))
-    // @ts-ignore
     .use(urlEncodeBodyParser({ extended: true }));
 
   if (config.authorized) {
