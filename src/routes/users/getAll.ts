@@ -4,7 +4,7 @@ import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 
 import { getAllUsers } from '../../models/user';
-import { User } from '../../models/user.d';
+import { UserWithoutPassword } from '../../models/user.d';
 
 /**
  * Get a list of all users
@@ -14,7 +14,7 @@ const _handler: HTTPRawHandler<
   {},
   {},
   {
-    users: Omit<User, 'password'>[];
+    users: UserWithoutPassword[];
   }
 > = async (event) => {
   if (!event.middleware.authorized) {

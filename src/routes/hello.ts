@@ -4,13 +4,18 @@ import { HTTPRawHandler } from './handler';
 /**
  * Check if server is alive
  */
-const _handler: HTTPRawHandler = async (event) => {
+const _handler: HTTPRawHandler<{}, {}, {}, any> = async (event) => {
   console.log('pathParameters', event.pathParameters);
   console.log('queryStringParameters', event.queryStringParameters);
   console.log('body', event.body);
 
   return {
-    message: 'Hello World'
+    message: 'Hello World',
+    data: {
+      pathParameters: event.pathParameters,
+      queryStringParameters: event.queryStringParameters,
+      body: event.body
+    }
   };
 };
 

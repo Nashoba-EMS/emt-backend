@@ -4,7 +4,7 @@ import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 
 import { getUser } from '../../models/user';
-import { User } from '../../models/user.d';
+import { UserWithoutPassword } from '../../models/user.d';
 import { generateToken, validatePassword } from '../../utils/auth';
 
 /**
@@ -19,7 +19,7 @@ const _handler: HTTPRawHandler<
   {},
   {
     token: string;
-    user: Omit<User, 'password'>;
+    user: UserWithoutPassword;
   }
 > = async (event) => {
   const user = await getUser(event.body.email, null);

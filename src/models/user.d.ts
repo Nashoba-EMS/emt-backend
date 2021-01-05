@@ -11,6 +11,8 @@ export interface User {
   availability: UserAvailability[];
 }
 
+export type UserWithoutPassword = Omit<User, 'password'>;
+
 export interface UserAvailability {
   date: string;
 }

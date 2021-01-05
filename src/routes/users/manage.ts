@@ -5,7 +5,7 @@ import { HTTPRawHandler } from '../handler';
 
 import { createUser, deleteUser, getUser, updateUser } from '../../models/user';
 import { generateRandomPassword, hashPassword } from '../../utils/auth';
-import { User } from '../../models/user.d';
+import { User, UserWithoutPassword } from '../../models/user.d';
 
 /**
  * Manage users: create, delete, update
@@ -19,7 +19,7 @@ const _handler: HTTPRawHandler<
   {},
   {},
   {
-    user?: Omit<User, 'password'>;
+    user?: UserWithoutPassword;
   }
 > = async (event) => {
   const { action, targetEmail, userPayload } = event.body;
