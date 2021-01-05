@@ -2,8 +2,7 @@ import httpErrors from 'http-errors';
 
 import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
-
-import { createUser, deleteUser, getUser, updateUser } from '../../models/user';
+import { createUser, deleteUser, getAllUsers, getUser, updateUser } from '../../models/user';
 import { generateRandomPassword, hashPassword } from '../../utils/auth';
 import { User, UserWithoutPassword } from '../../models/user.d';
 
@@ -12,33 +11,50 @@ import { User, UserWithoutPassword } from '../../models/user.d';
  */
 const _handler: HTTPRawHandler<
   {
-    action: 'CREATE' | 'UPDATE' | 'DELETE';
+    action: 'GET' | 'CREATE' | 'UPDATE' | 'DELETE';
     targetEmail: string;
     userPayload: Partial<User>;
   },
   {},
   {},
   {
-    user?: UserWithoutPassword;
+    user: UserWithoutPassword[] | UserWithoutPassword | null;
   }
 > = async (event) => {
   const { action, targetEmail, userPayload } = event.body;
 
   if (
-    !event.middleware.override &&
-    (!event.middleware.authorized ||
-      (!event.middleware.user.admin &&
-        !(action === 'UPDATE' && targetEmail === event.middleware.user.email && userPayload.admin !== undefined)))
+    !(
+      event.middleware.override ||
+      (event.middleware.authorized &&
+        (event.middleware.user.admin ||
+          action === 'GET' ||
+          (action === 'UPDATE' && targetEmail === event.middleware.user.email)))
+    )
   ) {
     // User not authorized or attempting to edit someone else and isn't an admin
     throw new httpErrors.Unauthorized('Not authorized');
   }
 
-  if (!targetEmail) {
+  if (!targetEmail && action !== 'GET') {
     throw new httpErrors.BadRequest('No user specified');
   }
 
   switch (action) {
+    case 'GET': {
+      const users = await getAllUsers();
+
+      if (!users) {
+        throw new httpErrors.InternalServerError('Could not get users');
+      }
+
+      return {
+        message: 'Success',
+        data: {
+          user: users
+        }
+      };
+    }
     case 'CREATE': {
       const rawPassword = userPayload.password ?? generateRandomPassword();
 
@@ -99,7 +115,9 @@ const _handler: HTTPRawHandler<
         // User does not exist, pretend user was deleted
         return {
           message: 'Success',
-          data: {}
+          data: {
+            user: null
+          }
         };
       }
 
@@ -116,7 +134,9 @@ const _handler: HTTPRawHandler<
 
       return {
         message: 'Success',
-        data: {}
+        data: {
+          user: null
+        }
       };
     }
     default: {

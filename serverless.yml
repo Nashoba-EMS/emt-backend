@@ -40,14 +40,6 @@ functions:
           path: users/login
           method: POST
           cors: true
-
-  usersGetAll:
-    handler: src/routes/users/getAll.handler
-    events:
-      - http:
-          path: users
-          method: GET
-          cors: true
   
   usersManage:
     handler: src/routes/users/manage.handler
