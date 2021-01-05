@@ -49,10 +49,7 @@ const _handler: HTTPRawHandler<
       }
 
       return {
-        message: 'Success',
-        data: {
-          user: users
-        }
+        user: users
       };
     }
     case 'CREATE': {
@@ -73,12 +70,9 @@ const _handler: HTTPRawHandler<
       }
 
       return {
-        message: 'Success',
-        data: {
-          user: {
-            ...createdUser,
-            password: rawPassword
-          }
+        user: {
+          ...createdUser,
+          password: rawPassword
         }
       };
     }
@@ -102,10 +96,7 @@ const _handler: HTTPRawHandler<
       }
 
       return {
-        message: 'Success',
-        data: {
-          user: updatedUser
-        }
+        user: updatedUser
       };
     }
     case 'DELETE': {
@@ -114,10 +105,7 @@ const _handler: HTTPRawHandler<
       if (!targetUser) {
         // User does not exist, pretend user was deleted
         return {
-          message: 'Success',
-          data: {
-            user: null
-          }
+          user: null
         };
       }
 
@@ -133,10 +121,7 @@ const _handler: HTTPRawHandler<
       }
 
       return {
-        message: 'Success',
-        data: {
-          user: null
-        }
+        user: null
       };
     }
     default: {

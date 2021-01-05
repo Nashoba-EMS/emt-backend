@@ -10,12 +10,9 @@ const _handler: HTTPRawHandler<{}, {}, {}, any> = async (event) => {
   console.log('body', event.body);
 
   return {
-    message: 'Hello World',
-    data: {
-      pathParameters: event.pathParameters,
-      queryStringParameters: event.queryStringParameters,
-      body: event.body
-    }
+    pathParameters: event.pathParameters,
+    queryStringParameters: event.queryStringParameters,
+    body: event.body
   };
 };
 

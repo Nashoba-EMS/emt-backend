@@ -1,5 +1,5 @@
 import { Handler, Callback } from 'aws-lambda';
-import { User } from '../models/user.d';
+import { UserWithoutPassword } from '../models/user.d';
 
 export type HTTPRawHandler<
   BodyPayload = null,
@@ -10,10 +10,7 @@ export type HTTPRawHandler<
 
 export type HTTPRawCallback = Callback<HTTPRawResult>;
 
-export interface HTTPRawResult<DataPayload = undefined> {
-  message: string;
-  data?: DataPayload;
-}
+export type HTTPRawResult<DataPayload = undefined> = DataPayload;
 
 export type HTTPUnknownEvent<BodyPayload = null, QueryPayload = null, PathPayload = null> =
   | HTTPUnauthorizedEvent<BodyPayload, QueryPayload, PathPayload>
@@ -35,7 +32,7 @@ export type HTTPAuthorizedEvent<BodyPayload, QueryPayload, PathPayload> = EventB
   {
     authorized: true;
     override: false;
-    user: User;
+    user: UserWithoutPassword;
   },
   BodyPayload,
   QueryPayload,

@@ -22,6 +22,13 @@ const _handler: HTTPRawHandler<
     user: UserWithoutPassword;
   }
 > = async (event) => {
+  if (event.middleware.authorized) {
+    return {
+      token: generateToken(event.middleware.user.email),
+      user: event.middleware.user
+    };
+  }
+
   const user = await getUser(event.body.email, null);
 
   if (!user) {
@@ -37,15 +44,12 @@ const _handler: HTTPRawHandler<
   }
 
   return {
-    message: 'Success',
-    data: {
-      token: generateToken(user.email),
-      user: userWithoutPassword
-    }
+    token: generateToken(user.email),
+    user: userWithoutPassword
   };
 };
 
 export const handler = middyfy(_handler, {
-  authorized: false,
+  authorized: true,
   useMongo: true
 });
