@@ -42,14 +42,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "offline": ". ./offline.sh && serverless offline start",
+    "offline": ". ./offline.sh && serverless offline start --allowCache",
     "deploy": ". ./deploy.sh && sls deploy",
     "validate": "npx tsc --noEmit",
     "eslint": "eslint --config ./.eslintrc.js --ext .js,.ts src/"
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "singleQuote": true,
-    "printWidth": 120
   }
 }
