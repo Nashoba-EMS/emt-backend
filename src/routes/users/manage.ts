@@ -18,7 +18,7 @@ const _handler: HTTPRawHandler<
   {},
   {},
   {
-    user: UserWithoutPassword[] | UserWithoutPassword | null;
+    user: UserWithoutPassword[] | UserWithoutPassword | User;
   }
 > = async (event) => {
   const { action, targetEmail, userPayload } = event.body;
@@ -103,10 +103,8 @@ const _handler: HTTPRawHandler<
       const targetUser = await getUser(targetEmail);
 
       if (!targetUser) {
-        // User does not exist, pretend user was deleted
-        return {
-          user: null
-        };
+        // User does not exist
+        throw new httpErrors.NotFound('User does not exist');
       }
 
       if (event.middleware.override || targetUser.email === event.middleware.user.email) {
@@ -121,7 +119,7 @@ const _handler: HTTPRawHandler<
       }
 
       return {
-        user: null
+        user: targetUser
       };
     }
     default: {
