@@ -7,6 +7,7 @@ export interface User {
   admin: boolean;
   name: string;
   birthdate: string;
+  eligible: boolean;
   certified: boolean;
   availability: UserAvailability[];
 }

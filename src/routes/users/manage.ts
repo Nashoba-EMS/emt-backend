@@ -61,6 +61,7 @@ const _handler: HTTPRawHandler<
         admin: userPayload.admin ?? false,
         name: userPayload.name ?? '',
         birthdate: userPayload.birthdate ?? '',
+        eligible: userPayload.eligible ?? true,
         certified: userPayload.certified ?? false,
         availability: userPayload.availability ?? []
       });
