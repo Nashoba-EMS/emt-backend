@@ -96,6 +96,15 @@ const _handler: HTTPRawHandler<
         throw new httpErrors.InternalServerError('Failed to update user');
       }
 
+      if (userPayload.password !== undefined) {
+        return {
+          user: {
+            ...updatedUser,
+            password: userPayload.password
+          }
+        };
+      }
+
       return {
         user: updatedUser
       };
