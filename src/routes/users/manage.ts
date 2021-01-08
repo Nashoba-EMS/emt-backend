@@ -21,7 +21,8 @@ const _handler: HTTPRawHandler<
     user: UserWithoutPassword[] | UserWithoutPassword | User;
   }
 > = async (event) => {
-  const { action, targetEmail, userPayload } = event.body;
+  const { action, targetEmail: targetEmailRaw, userPayload } = event.body;
+  const targetEmail = (targetEmailRaw ?? '').toLowerCase();
 
   if (
     !(
