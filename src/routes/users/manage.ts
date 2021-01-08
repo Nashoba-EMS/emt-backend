@@ -53,7 +53,10 @@ const _handler: HTTPRawHandler<
       };
     }
     case 'CREATE': {
-      const rawPassword = userPayload.password ?? generateRandomPassword();
+      const rawPassword =
+        userPayload.password !== undefined && userPayload.password.length > 0
+          ? userPayload.password
+          : generateRandomPassword();
 
       const createdUser = await createUser({
         email: targetEmail,
