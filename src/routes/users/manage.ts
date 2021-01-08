@@ -71,7 +71,7 @@ const _handler: HTTPRawHandler<
       });
 
       if (!createdUser) {
-        throw new httpErrors.InternalServerError('Failed to create user');
+        throw new httpErrors.InternalServerError('Failed to create user: check for duplicate email');
       }
 
       return {
@@ -97,7 +97,7 @@ const _handler: HTTPRawHandler<
       const updatedUser = await updateUser(targetEmail, updates);
 
       if (!updatedUser) {
-        throw new httpErrors.InternalServerError('Failed to update user');
+        throw new httpErrors.InternalServerError('Failed to update user: check for duplicate email');
       }
 
       if (userPayload.password !== undefined) {
