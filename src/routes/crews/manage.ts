@@ -27,8 +27,8 @@ const _handler: HTTPRawHandler<
     throw new httpErrors.Unauthorized('Not authorized');
   }
 
-  if (!targetId && action !== 'GET') {
-    throw new httpErrors.BadRequest('No user specified');
+  if (!targetId && action !== 'GET' && action !== 'CREATE') {
+    throw new httpErrors.BadRequest('No crew specified');
   }
 
   switch (action) {
