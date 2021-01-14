@@ -1,5 +1,5 @@
 import { db } from '../middleware/mongoConnector';
-import { User } from './user.d';
+import { User, UserWithoutId } from './user.d';
 
 /**
  * Get the User collection from Mongo
@@ -63,7 +63,7 @@ export const getAllUsers = async () => {
 /**
  * Create a new user
  */
-export const createUser = async (user: Omit<User, '_id'>) => {
+export const createUser = async (user: UserWithoutId) => {
   try {
     const res = await userCollection()?.insertOne(user);
 
