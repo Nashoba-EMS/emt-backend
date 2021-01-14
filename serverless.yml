@@ -48,6 +48,14 @@ functions:
           path: users/manage
           method: POST
           cors: true
+  
+  crewsManage:
+    handler: src/routes/crews/manage.handler
+    events:
+      - http:
+          path: crews/manage
+          method: POST
+          cors: true
 
 custom:
   serverless-offline:

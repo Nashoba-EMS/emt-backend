@@ -7,7 +7,7 @@ import { generateRandomPassword, hashPassword } from '../../utils/auth';
 import { User, UserWithoutPassword } from '../../models/user.d';
 
 /**
- * Manage users: create, delete, update
+ * Manage users: CRUD
  */
 const _handler: HTTPRawHandler<
   {
@@ -138,7 +138,7 @@ const _handler: HTTPRawHandler<
       };
     }
     default: {
-      throw new httpErrors.BadRequest('Missing action');
+      throw new httpErrors.BadRequest('Invalid action');
     }
   }
 };

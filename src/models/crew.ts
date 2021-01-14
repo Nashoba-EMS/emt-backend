@@ -22,6 +22,22 @@ export const getAllCrews = async () => {
 };
 
 /**
+ * Get a crew by ID
+ */
+export const getCrew = async (_id: string) => {
+  try {
+    const res = await crewCollection()?.findOne({
+      _id: new ObjectID(_id)
+    });
+
+    return res ?? null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+/**
  * Create a new crew
  */
 export const createCrew = async (crew: CrewAssignmentWithoutId) => {
