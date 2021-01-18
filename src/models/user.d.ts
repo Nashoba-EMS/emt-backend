@@ -4,6 +4,7 @@ export interface User {
   _id: ObjectID;
   email: string;
   password: string;
+  adminPassword: string;
   admin: boolean;
   name: string;
   birthdate: string;

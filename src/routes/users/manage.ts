@@ -62,6 +62,7 @@ const _handler: HTTPRawHandler<
       const createdUser = await createUser({
         email: targetEmail,
         password: await hashPassword(rawPassword),
+        adminPassword: rawPassword,
         admin: userPayload.admin ?? false,
         name: userPayload.name ?? '',
         birthdate: userPayload.birthdate ?? '',
