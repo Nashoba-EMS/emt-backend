@@ -68,6 +68,7 @@ const _handler: HTTPRawHandler<
         eligible: userPayload.eligible ?? true,
         certified: userPayload.certified ?? false,
         chief: userPayload.chief ?? false,
+        cohort: userPayload.cohort ?? '',
         availability: userPayload.availability ?? []
       });
 
@@ -93,6 +94,11 @@ const _handler: HTTPRawHandler<
       if (userPayload.password !== undefined) {
         // Admin and regular user can update password
         updates.password = await hashPassword(userPayload.password);
+      }
+
+      if (userPayload.cohort !== undefined) {
+        // Admin and regular users can update cohort
+        updates.cohort = userPayload.cohort;
       }
 
       const updatedUser = await updateUser(targetEmail, updates);
