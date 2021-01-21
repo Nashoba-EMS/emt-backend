@@ -1,5 +1,7 @@
 # emt-backend
 
+[![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/jtaylorchang/emt-backend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jtaylorchang/emt-backend/context:javascript) [![Lines of Code](https://tokei.rs/b1/github/jtaylorchang/emt-backend)](https://github.com/jtaylorchang/emt-backend)
+
 ## Setup
 
 - Run `yarn install`
