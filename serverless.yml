@@ -56,6 +56,14 @@ functions:
           path: crews/manage
           method: POST
           cors: true
+  
+  schedulesManage:
+    handler: src/routes/schedules/manage.handler
+    events:
+      - http:
+          path: schedules/manage
+          method: POST
+          cors: true
 
 custom:
   serverless-offline:
