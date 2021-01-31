@@ -3,7 +3,7 @@ import httpErrors from 'http-errors';
 import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 import { createUser, deleteUser, getAllUsers, getUser, updateUser } from '../../models/user';
-import { generateRandomPassword, hashPassword } from '../../utils/auth';
+import { generateRandomAlphanumeric, hashPassword } from '../../utils/auth';
 import { User, UserWithoutPassword } from '../../models/user.d';
 
 /**
@@ -57,7 +57,7 @@ const _handler: HTTPRawHandler<
       const rawPassword =
         userPayload.password !== undefined && userPayload.password.length > 0
           ? userPayload.password
-          : generateRandomPassword();
+          : generateRandomAlphanumeric();
 
       const createdUser = await createUser({
         email: targetEmail,
