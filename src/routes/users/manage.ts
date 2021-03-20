@@ -66,11 +66,11 @@ const _handler: HTTPRawHandler<
         admin: userPayload.admin ?? false,
         name: userPayload.name ?? '',
         birthdate: userPayload.birthdate ?? '',
+        gender: userPayload.gender ?? '',
         eligible: userPayload.eligible ?? true,
         certified: userPayload.certified ?? false,
         chief: userPayload.chief ?? false,
-        cohort: userPayload.cohort ?? '',
-        availability: userPayload.availability ?? []
+        cohort: userPayload.cohort ?? ''
       });
 
       if (!createdUser) {
@@ -100,6 +100,10 @@ const _handler: HTTPRawHandler<
       if (userPayload.cohort !== undefined) {
         // Admin and regular users can update cohort
         updates.cohort = userPayload.cohort;
+      }
+
+      if (userPayload.gender !== undefined) {
+        updates.gender = userPayload.gender;
       }
 
       const updatedUser = await updateUser(targetEmail, updates);

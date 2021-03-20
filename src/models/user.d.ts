@@ -8,11 +8,11 @@ export interface User {
   admin: boolean;
   name: string;
   birthdate: string;
+  gender: '' | 'M' | 'F' | 'O';
   eligible: boolean;
   certified: boolean;
   chief: boolean;
   cohort: '' | 'A' | 'B' | 'R';
-  availability: UserAvailability[];
 }
 
 export type UserWithoutId = Omit<User, '_id'>;
