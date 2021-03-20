@@ -59,7 +59,7 @@ const httpHeaderAuthorizer = () => ({
       } else {
         console.log('Failed sign in no email');
 
-        if (token === process.env.ADMIN_SECRET) {
+        if (process.env.NODE_ENV === 'development' && token === process.env.ADMIN_SECRET) {
           handler.event.middleware = {
             authorized: false,
             override: true,

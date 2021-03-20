@@ -57,7 +57,7 @@ const _handler: HTTPRawHandler<
       const rawPassword =
         userPayload.password !== undefined && userPayload.password.length > 0
           ? userPayload.password
-          : generateRandomAlphanumeric();
+          : generateRandomAlphanumeric(); // lgtm [js/insecure-randomness]
 
       const createdUser = await createUser({
         email: targetEmail,
