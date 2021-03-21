@@ -55,7 +55,7 @@ const _handler: HTTPRawHandler<
     }
     case 'CREATE': {
       const rawPassword =
-        userPayload.password !== undefined && userPayload.password.length > 0
+        userPayload.password !== undefined && userPayload.password.length > 0 // lgtm [js/insecure-randomness]
           ? userPayload.password
           : generateRandomAlphanumeric(); // lgtm [js/insecure-randomness]
 
