@@ -5,6 +5,7 @@ export interface Schedule {
   name: string;
   startDate: string;
   endDate: string;
+  editable: boolean;
   assignments: ScheduleDay[];
 }
 

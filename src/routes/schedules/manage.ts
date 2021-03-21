@@ -49,6 +49,7 @@ const _handler: HTTPRawHandler<
         name: schedulePayload.name ?? '',
         startDate: schedulePayload.startDate ?? '',
         endDate: schedulePayload.endDate ?? '',
+        editable: schedulePayload.editable ?? false,
         assignments: schedulePayload.assignments ?? []
       });
 
