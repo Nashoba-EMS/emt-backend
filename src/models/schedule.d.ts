@@ -20,9 +20,16 @@ export type ScheduleWithoutId = Omit<Schedule, '_id'>;
  */
 export interface ScheduleAvailability {
   _id: ObjectID;
-  schedule_id: string;
-  user_id: string;
+  schedule_id: ObjectID;
+  user_id: ObjectID;
   days: string[];
 }
 
+export type ScheduleAvailabilityRaw = Omit<ScheduleAvailability, '_id' | 'schedule_id' | 'user_id'> & {
+  _id: string;
+  schedule_id: string;
+  user_id: string;
+};
+
 export type ScheduleAvailabilityWithoutId = Omit<ScheduleAvailability, '_id'>;
+export type ScheduleAvailabilityRawWithoutId = Omit<ScheduleAvailabilityRaw, '_id'>;

@@ -64,6 +64,14 @@ functions:
           path: schedules/manage
           method: POST
           cors: true
+  
+  availabilityManage:
+    handler: src/routes/availability/manage.handler
+    events:
+      - http:
+          path: availability/manage
+          method: POST
+          cors: true
 
 custom:
   serverless-offline:

@@ -3,6 +3,7 @@ import httpErrors from 'http-errors';
 import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 import { createUser, deleteUser, getAllUsers, getUser, updateUser } from '../../models/user';
+import { deleteAvailability } from '../../models/availability';
 import { generateRandomAlphanumeric, hashPassword } from '../../utils/auth';
 import { User, UserWithoutPassword } from '../../models/user.d';
 
@@ -139,6 +140,9 @@ const _handler: HTTPRawHandler<
       }
 
       const deletedUser = await deleteUser(targetUser.email);
+      await deleteAvailability({
+        user_id: targetUser._id
+      });
 
       if (!deletedUser) {
         throw new httpErrors.InternalServerError('Failed to delete user');

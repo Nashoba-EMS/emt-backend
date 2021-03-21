@@ -3,6 +3,7 @@ import httpErrors from 'http-errors';
 import middyfy from '../../middleware';
 import { HTTPRawHandler } from '../handler';
 import { createSchedule, deleteSchedule, getAllSchedules, getSchedule, updateSchedule } from '../../models/schedule';
+import { deleteAvailability } from '../../models/availability';
 import { Schedule } from '../../models/schedule.d';
 
 /**
@@ -79,6 +80,9 @@ const _handler: HTTPRawHandler<
       }
 
       const deletedSchedule = await deleteSchedule(targetId);
+      await deleteAvailability({
+        schedule_id: targetSchedule._id
+      });
 
       if (!deletedSchedule) {
         throw new httpErrors.InternalServerError('Failed to delete schedule');
