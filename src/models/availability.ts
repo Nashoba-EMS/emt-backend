@@ -1,7 +1,7 @@
 import { ObjectID } from 'mongodb';
 
 import { db } from '../middleware/mongoConnector';
-import { ScheduleAvailability, ScheduleAvailabilityRawWithoutId } from './schedule.d';
+import { ScheduleAvailability, ScheduleAvailabilityRawWithoutId, ScheduleAvailabilityWithoutId } from './schedule.d';
 
 /**
  * Get the Availability collection from Mongo
@@ -24,22 +24,15 @@ export const getAvailabilityFor = async (searchOptions: { schedule_id?: ObjectID
 /**
  * Create a new availability
  */
-export const createAvailability = async (availability: ScheduleAvailabilityRawWithoutId) => {
+export const createAvailability = async (availability: ScheduleAvailabilityWithoutId) => {
   try {
-    const user_id = new ObjectID(availability.user_id);
-    const schedule_id = new ObjectID(availability.schedule_id);
-
     const res = await availabilityCollection()?.findOneAndUpdate(
       {
-        user_id,
-        schedule_id
+        user_id: availability.user_id,
+        schedule_id: availability.schedule_id
       },
       {
-        $set: {
-          ...availability,
-          user_id,
-          schedule_id
-        }
+        $set: availability
       },
       {
         upsert: true,

@@ -69,13 +69,13 @@ const _handler: HTTPRawHandler<
       };
     }
     case 'CREATE': {
-      if (!availabilityPayload.schedule_id || !availabilityPayload.user_id) {
+      if (!searchOptions.schedule_id || !searchOptions.user_id) {
         throw new httpErrors.BadRequest('Missing required data');
       }
 
       const createdAvailability = await createAvailability({
-        schedule_id: availabilityPayload.schedule_id,
-        user_id: availabilityPayload.user_id,
+        schedule_id: searchOptions.schedule_id,
+        user_id: searchOptions.user_id,
         days: availabilityPayload.days ?? []
       });
 
