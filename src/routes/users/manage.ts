@@ -45,7 +45,7 @@ const _handler: HTTPRawHandler<
     case 'GET': {
       const users = await getAllUsers();
 
-      if (!users) {
+      if (users === null) {
         throw new httpErrors.InternalServerError('Could not get users');
       }
 

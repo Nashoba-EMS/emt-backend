@@ -35,7 +35,7 @@ const _handler: HTTPRawHandler<
     case 'GET': {
       const schedules = await getAllSchedules();
 
-      if (!schedules) {
+      if (schedules === null) {
         throw new httpErrors.InternalServerError('Could not get schedules');
       }
 

@@ -35,7 +35,7 @@ const _handler: HTTPRawHandler<
     case 'GET': {
       const crews = await getAllCrews();
 
-      if (!crews) {
+      if (crews === null) {
         throw new httpErrors.InternalServerError('Could not get crews');
       }
 
