@@ -41,3 +41,7 @@ Then run:
 ```bash
 yarn offline
 ```
+
+## License
+
+`@nashoba-ems/emt-backend` is [BSD-3-Clause licensed](./LICENSE)
